@@ -1,0 +1,282 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper]{geometry}
+\geometry{left=2.0cm,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+\usepackage{ctex}
+\usepackage{amsmath,amsfonts,graphicx,amssymb,bm,amsthm}
+\usepackage{algorithm,algorithmicx}
+\usepackage{umoline}
+\usepackage[noend]{algpseudocode}
+\usepackage{fancyhdr}
+
+
+\newcounter{counter_exm}\setcounter{counter_exm}{1}
+%\newcounter{counter_thm}\setcounter{counter_thm}{1}
+%\newcounter{counter_lma}\setcounter{counter_lma}{1}
+%\newcounter{counter_dft}\setcounter{counter_dft}{1}
+%\newcounter{counter_clm}\setcounter{counter_clm}{1}
+%\newcounter{counter_cly}\setcounter{counter_cly}{1}
+
+\newtheorem{theorem}{{\hskip 1.7em \bf 定理}}
+\newtheorem{lemma}[theorem]{\hskip 1.7em 引理}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{\hskip 1.7em 命题}
+\newtheorem{corollary}[theorem]{\hskip 1.7em 推论}
+\newtheorem{definition}[theorem]{\hskip 1.7em 定义}
+
+\renewcommand{\emph}[1]{\begin{kaishu}#1\end{kaishu}}
+
+\newenvironment{solution}{{\noindent\hskip 2em \bf 解 \quad}}
+
+
+\renewenvironment{proof}{{\noindent\hskip 2em \bf 证明 \quad}}{\hfill$\qed$\par}
+\newenvironment{example}{{\noindent\hskip 2em \bf 例 \arabic{counter_exm}\quad}}{\addtocounter{counter_exm}{1}\par}
+
+\newenvironment{concept}[1]{{\bf #1\quad} \begin{kaishu}} {\end{kaishu}\par}
+
+\newcommand\E{\mathbb{E}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\N{\mathbb{N}}
+
+\begin{document}
+    
+    \pagestyle{fancy}
+    \lhead{\kaishu 中国科学院大学}
+    \chead{}
+    \rhead{\kaishu 2024年秋季学期组合数学}
+    
+    \begin{center}
+        {\LARGE \bf 组合数学第二讲}\\
+    \end{center}
+    \begin{kaishu}
+        授课时间: 2024年9月2日\quad
+        授课教师: 孙晓明
+        \hfill 记录人: 袁晨圃
+    \end{kaishu}
+
+    \section{广义二项式定理的一些应用}
+
+    $(1+x)^n=\sum\limits_{k\geq 0}\dbinom{n}{k}x^k$
+
+    考虑$\sum\limits_{k\geq 0}\binom{n}{3k}:$
+
+    代入$x=1$
+    \begin{align*}
+        (1+1)^n=\sum_{k\geq 0}\binom{n}{k}
+    \end{align*}
+
+    代入$x=e^{i\frac{2}{3}\pi}$
+
+    \begin{align*}
+        (1+e^{i\frac{2}{3}\pi})^n&=\sum\limits_{k\geq 0}\binom{n}{k}e^{i\frac{2k}{3}\pi}\\
+        &=\sum_{k\geq 0}\binom{n}{3k}+e^{i\frac{2}{3}\pi}\sum_{k\geq 0}\binom{n}{3k+1}+e^{i\frac{4}{3}\pi}\sum_{k\geq 0}\binom{n}{3k+2}\\
+    \end{align*}
+
+    代入$x=e^{i\frac{4}{3}\pi}$
+    
+    \begin{align*}
+        (1+e^{i\frac{4}{3}\pi})^n&=\sum\limits_{k\geq 0}\binom{n}{k}e^{i\frac{4k}{3}\pi}\\
+        &=\sum_{k\geq 0}\binom{n}{3k}+e^{i\frac{4}{3}\pi}\sum_{k\geq 0}\binom{n}{3k+1}+e^{i\frac{2}{3}\pi}\sum_{k\geq 0}\binom{n}{3k+2}
+    \end{align*}
+
+    注意到$e^{i\frac{4}{3}\pi}+e^{i\frac{2}{3}\pi}=-1$
+
+    所以
+
+    \begin{align*}
+        \sum_{k\geq 0}\binom{n}{3k}&=\frac 13[2^n+(1+e^{i\frac23\pi})^n+(1+e^{i\frac43\pi})^n]\\
+        &=\frac13[2^n+e^{i\frac n6\pi}+e^{-i\frac n3\pi}]
+    \end{align*}
+
+    \begin{equation}
+        \label{eqsumCnkxk}
+        (1+x)^n=\sum\limits_{k\geq 0}\binom{n}{k}x^k
+    \end{equation}
+
+    \textbf{考虑对\eqref{eqsumCnkxk}求导：}
+
+    \[n(1+x)^{n-1}=\sum\limits_{k\geq 1}k\binom{n}{k}x^{k-1}\]
+
+    可得到\begin{equation}\sum_{k\geq 0}k\binom{n}{k}=n\cdot 2^{n-1}\label{eqsumkCnk}\end{equation}
+
+    \begin{example}
+        $T\leq S=\{1,2,\cdots,n\}$，求$E(|T|)$
+    \end{example}
+
+    \begin{solution}
+        \begin{align*}
+            E(|T|)=\sum_{k=0}^n=k\cdot\frac{\binom{n}{k}}{2^n}=\frac n2
+        \end{align*}
+
+        法二：期望具有线性性，$E(\sum)=\sum E_i=\dfrac n2$
+    \end{solution}
+
+    \begin{example}
+        求$\sum k^2\dbinom{n}{k}$
+    \end{example}
+
+    \begin{solution}
+        在\eqref{eqsumkCnk}左右两边同时乘$x$再求导
+    \end{solution}
+
+    \begin{equation}
+        \label{eqsumCmkxk}
+        (1+x)^m=\sum\limits_{k\geq 0}\binom{m}{k}x^k
+    \end{equation}
+
+    \textbf{将\eqref{eqsumCnkxk}和\eqref{eqsumCmkxk}乘起来：}
+
+    \[(1+x)^{m+n}=\sum_{k\geq 0}x^k\cdot\sum_{j=0}^k\binom{n}{j}\binom{m}{k-j}\]
+
+    又\[\sum_{k\geq 0}\binom{m+n}{k}x^k=(1+x)^{m+n}\]
+
+    所以\[\binom{m+n}{k}=\sum_{j=0}^{k}\binom{n}{j}\binom{m}{k-j}\]
+
+    \begin{theorem}
+        [范德蒙恒等式]
+        \[\dbinom{m+n}{k}=\sum\limits_{j=0}^{k}\dbinom{n}{j}\dbinom{m}{k-j},\quad m,n\in\mathbb{R},k\in\mathbb{N}\]
+        \label{vandermone}
+    \end{theorem}
+    特别地：
+
+    令$n=m$
+    \[\dbinom{2n}{k}=\sum_{j=0}^n\dbinom{n}{j}\binom{n}{n-j}=\sum_{j=0}^n\dbinom{n}{j}^2=\sum_{j\geq0}\dbinom{n}{j}^2\]
+
+    令$m=1$
+    \[\binom{n+1}{k}=\sum_{j=k-1}^k\binom{n}{j}\binom{1}{k-j}=\binom{n}{k-1}+\binom{n}{k}\]
+    
+    \begin{theorem}[朱世杰恒等式]
+        \[\binom{k}{k}+\binom{k+1}{k}+\binom{k+2}{k}+\cdots+\binom{n}{k}=\binom{n+1}{k+1}\]
+        使用下降幂的形式：
+        \[\sum x^{\underline{k}}=\dfrac{1}{k+1}x^{\underline{k+1}}\]
+    \end{theorem}
+
+    \begin{proof}
+        因为$\dbinom{k}{k}=\dbinom{k+1}{k+1}$，故
+        \begin{align*}
+            &\binom{k}{k}+\binom{k+1}{k}+\binom{k+2}{k}+\cdots+\binom{n}{k}\\
+            &=\binom{k+1}{k+1}+\binom{k+1}{k}+\binom{k+2}{k}+\cdots+\binom{n}{k}\\
+            &=\binom{k+2}{k+1}+\binom{k+2}{k}+\cdots+\binom{n}{k}\\
+            &\vdots\\
+            &=\binom{n+1}{k+1}
+        \end{align*}
+    \end{proof}
+
+    特别地，令$k=2:$
+    \[\binom{2}{2}+\binom 32+\binom 42+\cdots+\binom n2=\binom{n+1}{3}\]
+
+    所以\[\sum_{k=1}^n k^2=\sum(k(k-1)+k)=\sum_{k=1}^n(2\cdot\binom{k}{2}+1\cdot\binom{k}{1})=2\cdot\binom{n+1}{3}+\binom{n+1}{2}\]
+
+    类似地， 求\(\sum\limits_{k=1}^n k^3:\)
+
+    待定系数，设\[k^3=c_3k^{\underline{3}}+c_2k^{\underline{2}}+c_1k^{\underline{1}}+c_0k^{\underline{0}}\]
+
+    对于一般的$x^d:$
+    \[x^d=\sum_{k=0}^d c_k x^{\underline{k}}\]
+
+    a.k.a. 第二类斯特林数（普通幂转下降幂）
+
+    \section{特殊排列}
+
+    \textbf{圆排列}
+
+    $n$个人选$k$个人圆排列：
+    \[\dbinom{n}{k}(k-1)!=\dfrac{n^{\underline{k}}}{k}\]
+
+    \textbf{可重排列}
+
+    $k_1$个$a_1$，$k_2$个$a_2,\cdots,k_t$个$a_t$全排列，方案数：
+    \[\dfrac{(k_1+k_2+\cdots+k_t)!}{k_1!k_2!\cdots k_t!}=\dfrac{(\sum k_i)!}{\prod k_i!}\]
+
+    使用可重排列可重新解释二项式定理公式$(a+b)^n=\sum\limits_{k=0}^n\binom{n}{k}a^kb^{n-k}$
+    
+    （选$k$个$a$，$n-k$个$b$可重排列）
+
+    故
+    \[(a+b+c)^n=\sum\frac{n!}{i!j!(n-i-j)!}a^ib^jc^{n-i-j}\]
+
+    一般情况：
+
+    \[(\sum_{i=1}^n x_i)^2=\sum_{\substack{0\leq i_1,\cdots i_k\leq n\\i_1+\cdots+i_k=n}}\dfrac{n!}{i_1!i_2!\cdots i_k!}x_1^{i_1}x_2^{i_2}\cdots x_k^{i_k}\]
+
+    引进广义组合数记号：
+
+    \[\begin{pmatrix}n\\k,n-k\end{pmatrix}:=\dbinom{n}{k}\]
+
+    \[\begin{pmatrix} n\\i_1,i_2,\cdots,i_n \end{pmatrix}:=\dfrac{n!}{i_1!i_2!\cdots i_k!}\]
+
+    \section{斯特林公式}
+
+    对$n!$的渐进估计：$n!\sim\sqrt {2\pi n}\left(\dfrac{n}{e}\right)^n$
+
+    \begin{example}
+        掷硬币问题：1000次，500次朝上概率:
+    \end{example} 
+    
+    \[\dbinom{2n}{n}\cdot\dfrac 1{2^{2n}}\sim \dfrac{1}{\sqrt n}\]
+
+    \begin{align*}
+        &\dfrac{(2n)!}{n!n!}\cdot\dfrac1{2^{2n}}\\
+        \sim\ &\dfrac{\sqrt{2\pi\cdot 2n}\left(\dfrac{2n}{e}\right)^{2n}}{[\sqrt{2\pi\cdot 2n}\left(\dfrac ne\right)]^2}\bigg/ 2^{2n}\\
+        \sim\ &\dfrac{1}{\sqrt n}
+    \end{align*}
+
+    \section{整值多项式}
+
+    \begin{definition}
+        整值多项式$P(x)$：$\forall x\in\mathbb{Z}\Rightarrow P(x)\in\mathbb{Z}$
+    \end{definition}
+
+    显然，整系数多项式一定是整值多项式。
+
+    反之不然，e.g. $\dfrac{n(n-1)}{2}$ 
+
+    \begin{theorem}
+        次数为$d$的多项式$P(x)$是整值多项式$\Leftrightarrow P(x)=\sum\limits_{0\leq k\leq d}C_k\dbinom{x}{k},C_k\in\mathbb{Z}$
+    \end{theorem}
+
+    \begin{proof}
+        必要性：二项式系数是整值多项式
+
+        充分性：
+
+        \begin{align*}
+            &P(0)\in \mathbb{Z}\Rightarrow C_0\in \mathbb{Z}\\
+            &P(1)\in \mathbb{Z}\Rightarrow P(1)=C_1\binom{1}{1}+\underbrace{C_0\binom{1}{0}}_{\in\Z}\in \mathbb{Z}\Rightarrow C_1\in \Z\\
+            &\vdots\\
+            &P(k)\in \mathbb{Z}\Rightarrow P(k)=C_k\binom{k}{k}+\underbrace{C_0\binom{1}{0}+C_1\binom{k}{1}+\cdots}_{\in\Z}\in\Z\Rightarrow C_k\in\Z
+        \end{align*}
+    \end{proof}
+
+    \begin{corollary}
+        在$P(0),P(1),\cdots P(d)$上（连续$d+1$个整数点）都是整值$P(x)$的多项式是整值多项式
+        \label{cor1}
+    \end{corollary}
+
+    \begin{corollary}
+        在$P(m),P(m+1),\cdots P(m+d)$上（连续$d+1$个整数点）都是整值$P(x)$的多项式是整值多项式
+    \end{corollary}
+
+    \begin{proof}
+        令$H(x)=P(x+m)$
+
+        $H(0)=P(m)\in \Z, \quad H(1)=P(m+1),\cdots,H(d)=P(m+d)\in\Z$
+
+        平移不影响次数，$\deg(H)=\deg(P)=d$，由\ref{cor1}知$H(x)$是整值多项式，设$H(x)=\sum\limits_{k=0}^d e_k\dbinom{x}{k}$则$e_i$是整数
+
+        $H(x)=P(x+m),\quad P(y)=H(y-m)=\sum\limits_{k=0}^d e_k\dbinom{y-m}{k}$
+
+        由 \ref{vandermone}, $\dbinom{y-m}{k}=\sum\limits_{j=0}^k\dbinom{y}{j}\dbinom{-m}{k-j}=\sum\limits_{j=0}^d\underbrace{\left(\sum\limits_{k=j}^d e_k\dbinom{-m}{k-j}\right)}_{\in \Z}\underbrace{\dbinom{y}{j}}_{\in\Z}$
+    \end{proof}
+
+    \begin{example}
+        思考题：在$d+1$个整点上都是整值的多项式$P(x)$是不是整值多项式？
+    \end{example}
+
+\end{document}
+
+
+
+
+

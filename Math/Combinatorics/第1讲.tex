@@ -1,0 +1,203 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper]{geometry}
+\geometry{left=2.0cm,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+\usepackage{ctex}
+\usepackage{amsmath,amsfonts,graphicx,amssymb,bm,amsthm,array}
+\usepackage{algorithm,algorithmicx}
+\usepackage{umoline}
+\usepackage[noend]{algpseudocode}
+\usepackage{fancyhdr}
+
+
+\newcounter{counter_exm}\setcounter{counter_exm}{1}
+%\newcounter{counter_thm}\setcounter{counter_thm}{1}
+%\newcounter{counter_lma}\setcounter{counter_lma}{1}
+%\newcounter{counter_dft}\setcounter{counter_dft}{1}
+%\newcounter{counter_clm}\setcounter{counter_clm}{1}
+%\newcounter{counter_cly}\setcounter{counter_cly}{1}
+
+\newtheorem{theorem}{{\hskip 1.7em \bf 定理}}
+\newtheorem{lemma}[theorem]{\hskip 1.7em 引理}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{\hskip 1.7em 命题}
+\newtheorem{corollary}[theorem]{\hskip 1.7em 推论}
+\newtheorem{definition}[theorem]{\hskip 1.7em 定义}
+
+\renewcommand{\emph}[1]{\begin{kaishu}#1\end{kaishu}}
+
+\newenvironment{solution}{{\noindent\hskip 2em \bf 解 \quad}}
+
+
+\renewenvironment{proof}{{\noindent\hskip 2em \bf 证明 \quad}}{\hfill$\qed$\par}
+\newenvironment{example}{{\noindent\hskip 2em \bf 例 \arabic{counter_exm}\quad}}{\addtocounter{counter_exm}{1}\par}
+
+\newenvironment{concept}[1]{{\bf #1\quad} \begin{kaishu}} {\end{kaishu}\par}
+
+\newcommand\E{\mathbb{E}}
+
+\begin{document}
+    
+    \pagestyle{fancy}
+    \lhead{\kaishu 中国科学院大学}
+    \chead{}
+    \rhead{\kaishu 2024年秋季学期组合数学}
+    
+    \begin{center}
+        {\LARGE \bf 组合数学第一讲}\\
+    \end{center}
+        \begin{kaishu}
+            授课时间: 2024年8月26日\quad
+            授课教师: 孙晓明
+            \hfill 记录人: 袁晨圃
+        \end{kaishu}
+    \section{课程信息}
+    期末分数占比：平时作业 40\% + 期中考试 30\% + 期末考试 30\%
+    \section{下降幂}
+    \begin{align*}
+    A_n^m&:=n^{\underline{m}} \\
+    C_n^m&:=\binom{n}{m}=\dfrac{n^{\underline{m}}}{m!}
+    \end{align*}
+    \begin{definition}
+        n的下降阶乘：$n^{\underline{m}}=n(n-1)(n-2)\cdots(n-m+1)$
+    \end{definition}
+    
+    一些特殊情况：
+    \[
+    n^{\underline{n}}=n!, n^{\underline{n+1}}=0, n^{\underline{m}}=0(m>n), \quad \dbinom{n}{n}=1, \dbinom{n}{n+1}=0, \dbinom{n}{m}=0(m>n)
+    \]
+    \section{广义二项式定理及其应用}
+
+    因此，\[(1+x)^n=\sum\limits_{k=0}^n\dbinom nk x^k=\sum\limits_{k\geq0, k\in Z}\dbinom nk x^k\]
+
+    继续扩展，\[\dbinom{-1}{m}=\dfrac{(-1)^{\underline{m}}}{m!}=\dfrac{(-1)(-2)(-3)\cdots(-m)}{m!}=(-1)^m\]
+
+    \[\dbinom{-2}{m}=\dfrac{(-2)(-3)(-4)\cdots(-m-1)}{m!}=(-1)^m\dfrac{(m+1)^{\underline{m}}}{m!}=(-1)^m\dbinom{m+1}{m}\]
+
+    \begin{theorem}
+        \(\dbinom{n}{m},n\in\mathbb{Z},m\in\mathbb{Z}_{+}\)一定是整数
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item $0\leq n\leq m:$正常组合数，一定是整数
+            \item $0\leq m<n:$等于$0$
+            \item $n< 0:$ $\binom{n}{m}=(-1)^m\binom{n'+m-1}{m}$，其中$n'=-n$
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}
+        广义二项式定理：$(x+y)^\alpha=\sum\limits_{k\geq0, k\in Z}\dbinom{\alpha}{k}x^ky^{n-k}$
+    \end{theorem}
+
+    \begin{example}
+        \begin{align*}
+            \dfrac{1}{1+x}&=(1+x)^{-1}=\sum\limits_{k\geq0, k\in Z}x^k(-1)^k=1-x+x^2-x^3+\cdots\\
+            \dfrac{1}{1-x}&=(1-x)^{-1}=1+x+x^2+x^3+\cdots\\
+            \\
+            \dfrac{1}{(1-x)^2}&=(1-x)^{-2}=\sum\limits_{k\geq0, k\in Z}\dbinom{-2}{k}(-x)^k=\sum\limits_{k\geq0, k\in Z}\dbinom{k+1}{k}x^k=\sum\limits_{k\geq0, k\in Z}(k+1)x^k\\
+        \end{align*}
+    \end{example}
+
+    \begin{definition}
+        双阶乘 $(2n-1)!!=(2n-1)(2n-3)\cdots3\cdot1, (2n)!!=2n(2n-2)(2n-4)\cdots2$
+    \end{definition}
+
+    \begin{example}
+        $(1-x)^{\frac12}$
+    \end{example}
+
+    \begin{solution}
+
+        \[
+        \begin{aligned}
+            (1-x)^{\frac 12}&=\sum\limits_{k\geq 0}\binom{\frac 12}{k}(-x)^k\\
+            &=1+\sum\limits_{k\geq 1}(-1)^kx^k\dfrac{(\frac12)(-\frac12)(-\frac23)\cdots(\frac12-k+1)}{k!}\\
+            &=1-\sum\limits_{k\geq 1}\dfrac{\frac12\cdot\frac12\cdot\frac32\cdots\frac{2k-3}{2}}{k!}x^k\\
+            &=1-\sum\limits_{k\geq 1}\dfrac{(2k-3)!!}{2^kk!}x^k\\
+            &=1-\sum\limits_{k\geq 1}\dfrac{(2k-2)!}{2^kk!(2k-2)!!}x^k\\
+            &=1-\sum\limits_{k\geq 1}\dfrac{(2k-2)!}{2^k\cdot k!\cdot 2^{k-1}\cdot(k-1)!}x^k\\
+            &=1-\sum\limits_{k\geq 1}\dfrac{(2k-2)!}{2^{2k-1}\cdot k!\cdot(k-1)!}x^k\\
+            &=1-\sum\limits_{k\geq 1}\dfrac{1}{2^{2k-1}}\cdot\dfrac{1}{k}\dbinom{2k-2}{k-1}x^k
+        \end{aligned}
+        \]
+
+    \end{solution}
+
+    \begin{definition}
+        卡特兰数：$C_n=\dfrac{1}{n+1}\dbinom{2n}{n}$
+    \end{definition}
+
+    \begin{example}
+        求多项式空间的两组基 $(x^0, x, x^2, x^3, \ldots)$ 和 $(1, (x+1), (x+1)^2, (x+1)^3, \ldots)$ 的转换矩阵。
+    \end{example}
+
+    \begin{solution}
+        \[(1+x)^n=\sum\limits_{k\geq0}\dbinom{n}{k}x^k=\left[\dbinom{n}{0}\dbinom n1\dbinom n2\cdots\right]\left[\begin{matrix}
+        x^0\\x^1\\x^2\\\vdots
+        \end{matrix}\right]\]
+
+        \[
+        \begin{bmatrix}
+            (1+x)^0\\ (1+x)^1\\ (1+x)^2\\ \vdots\\ (1+x)^n\\ \vdots
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            0\choose1 & 0\choose2 & 0\choose3 & \cdots\\
+            1\choose1 & 1\choose2 & 1\choose3 & \cdots\\
+            2\choose1 & 2\choose2 & 2\choose3 & \cdots\\
+            \vdots & \vdots & \vdots & \ddots \\
+            n\choose1 & n\choose2 & n\choose3 & \cdots\\
+            \vdots & \vdots & \vdots & \cdots
+        \end{bmatrix}
+        \begin{bmatrix}
+            x^0\\ x^1\\ x^2\\ \vdots
+        \end{bmatrix}
+        \]
+
+        令上述矩阵为 $A$（杨辉三角）
+
+        求 $A$ 的逆矩阵：
+
+        换元，令 $y=x+1\Rightarrow x=y-1$
+
+        则 $x^n=(y-1)^n=\sum\limits_{k\geq0}\dbinom{n}{k}(-1)^k(-y)^k=\sum\limits_{k\geq 0}\dbinom{n}{k}(-1)^{n-k}y^k$
+
+        因此，\[
+        \begin{bmatrix}
+            x^0\\ x^1\\ x^2\\ \vdots\\x^i\\ \vdots
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            (-1)^{0-0}\binom{0}{0} & (-1)^{0-1}\binom{0}{1} &\cdots&(-1)^{0-j}\binom{0}{j}\\
+            (-1)^{1-0}\binom{1}{0} & (-1)^{1-1}\binom{1}{1} &\cdots&(-1)^{1-j}\binom{1}{j}\\
+            (-1)^{2-0}\binom{2}{0} & (-1)^{2-1}\binom{2}{1} &\cdots&(-1)^{2-j}\binom{2}{j}\\
+            \vdots & \vdots & \ddots &\vdots\\
+            (-1)^{i-0}\binom{i}{0} & (-1)^{i-1}\binom{i}{1} &\cdots&(-1)^{i-j}\binom{i}{j}\\
+            \vdots & \vdots & \cdots & \ddots
+        \end{bmatrix}
+        \begin{bmatrix}
+            y^0\\ y^1\\ y^2\\ \vdots
+        \end{bmatrix}
+        \]
+
+        令上述矩阵为 $B$
+
+        因此，$AB=BA=I$
+
+        可以得到恒等式：
+        \begin{equation}
+        \sum\limits_{k\geq 0}\dbinom{n}{k}\dbinom{k}{m}(-1)^{n-k}=0, m<n
+        \end{equation}
+
+        即：给$A$交错添加负号
+
+    \end{solution}
+
+\end{document}
+
+
+
+
+
